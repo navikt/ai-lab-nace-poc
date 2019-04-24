@@ -12,18 +12,19 @@ env:
   global:
   - PROJECT_NAME=nav-datalab
   - IMAGE_NAME=ai-lab-nace-poc
-  - NAMESPACE=ai-lab
+  - NAMESPACE=nace-poc
   - DEPLOYMENT_NAME=deployment/ai-lab-nace-poc
-  - CLUSTER_NAME=ai-lab-nace-poc-cluster
+  - CLUSTER_NAME=ai-lab
   - DATE=$(date +%Y-%m-%d)
   - GIT_HASH=$(git rev-parse --short HEAD)
   - IMAGE_TAG=${DATE}-${GIT_HASH}
   - SERVICE_ACCOUNT=travis-ci@${PROJECT_NAME}.iam.gserviceaccount.com
   - ZONE_TAG=europe-north1-a
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 
 before_install:
   # Download and unpack gcloud SDK if not already cached
-  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com >/dev/null; fi
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; curl https://sdk.cloud.google.com | bash >/dev/null; fi
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud --quiet version
   - gcloud --quiet components update
