@@ -50,10 +50,18 @@ export default class Search extends React.Component {
                 .then(response => {
                 if (response.status === 200) {
                     if (q === this.waitingFor) {
-                        response.json()
-                        .then(results => {
-                            this.setState({items: results});
-                        })
+                        console.log('Content type', response.headers.get("content-type"))
+                        const contentType = response.headers.get("content-type");
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                          response.json()
+                            .then(results => {
+                                this.setState({items: results});
+                          });
+                        } else {
+                          return response.text().then(text => {
+                            console.log('Search response', text)
+                          });
+                        }
                     }
                 }
             })
