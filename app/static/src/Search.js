@@ -2,6 +2,8 @@ import React from 'react'
 import Downshift from 'downshift'
 import { throttle, debounce } from "throttle-debounce"
 
+const nace = require('./item2tekst.json')
+
 export default class Search extends React.Component {
     constructor(props) {
         super(props);
@@ -15,10 +17,10 @@ export default class Search extends React.Component {
 
     _autocompleteCache = {};
 
-    componentWillMount() {
-        import('./item2tekst.json').then(
-          res => this.setState({ nace: res })
-        );
+    componentDidMount() {
+     //   import('./item2tekst.json').then(
+     //     res => this.setState({ nace: res })
+     //   );
     }
 
     onChange = (selection) => {
@@ -71,7 +73,7 @@ export default class Search extends React.Component {
     }
 
     itemToString = (item) => {
-        const {nace} = this.state;
+        // const {nace} = this.state;
         // hente tekst for kode fra map i item2tekst.json
         console.log('item to string: ', item)
         const entry = nace.filter(function(o) {
