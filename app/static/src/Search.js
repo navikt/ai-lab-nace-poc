@@ -17,11 +17,6 @@ export default class Search extends React.Component {
 
     _autocompleteCache = {};
 
-    componentDidMount() {
-     //   import('./item2tekst.json').then(
-     //     res => this.setState({ nace: res })
-     //   );
-    }
 
     onChange = (selection) => {
         console.log(`You selected ${selection.value}`)
@@ -73,8 +68,6 @@ export default class Search extends React.Component {
     }
 
     itemToString = (item) => {
-        // const {nace} = this.state;
-        // hente tekst for kode fra map i item2tekst.json
         console.log('item to string: ', item)
         const entry = nace.filter(function(o) {
             return o.nace === item.nace;
@@ -83,9 +76,7 @@ export default class Search extends React.Component {
         if (entry.length === 0 || !('tekst' in entry[0]) ) {
             return item.nace
         }
-   
         return item.nace + ': ' + entry[0].tekst;
-  
     }
 
     render() {
@@ -95,9 +86,9 @@ export default class Search extends React.Component {
         return (
             <div>
                 <Downshift
-                    onChange={selection => this.onChange(selection)}
                     onInputValueChange={(inputValue) => this.onInputValueChange(inputValue)}
-                    itemToString={item => (item ? item.pred + ' ' + item.value : '')}
+                    onChange = {selection => this.onChange(selection)}
+                    itemToString={item => (item ? this.itemToString(item) + ' -> ' + item.value : '')}
                     >
                     {({
                         getInputProps,
