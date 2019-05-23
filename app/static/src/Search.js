@@ -73,7 +73,7 @@ export default class Search extends React.Component {
     itemToString = (item) => {
         const {nace} = this.state;
         // hente tekst for kode fra map i item2tekst.json
-        // console.log('item: ', item)
+        console.log('item to string: ', item)
         const entry = nace.filter(function(o) {
             return o.nace === item.nace;
         });
