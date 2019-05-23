@@ -26,11 +26,6 @@ def load_fasttext_model():
         print(f'Unexpected error: {sys.exc_info()[0]}')
   
 
-@app.route('/', methods=['GET', 'POST'])
-def react():
-    return render_template('index.html')
-
-
 @app.route('/isReady', methods=['GET'])
 def isReady():
     return "OK"
@@ -46,11 +41,11 @@ def api():
     if 'q' in request.args:
         query = request.args['q']
         if not isinstance(query, str):
-            return
+            return Response('To Short', mimetype='text/html')
         if len(query) < 3:
-            return
+            return Response('To Short', mimetype='text/html')
     else:
-        return
+        return Response('No arguments', mimetype='text/html')
 
     if model is None:      
         load_fasttext_model()
@@ -59,7 +54,11 @@ def api():
     ret = []
     for i, pred in enumerate(result[0]):
         ret.append({'nace':pred.replace('__label__','').replace('"',''),'value':str(result[1][i])})
-    return json.dumps(ret)
+    return Response(json.dumps(ret), mimetype='application/json')
+
+@app.route('/', methods=['GET', 'POST'])
+def react():
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
