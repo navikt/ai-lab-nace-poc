@@ -1,4 +1,5 @@
 import flask
+#import werkzeug
 from flask import Flask, Response, render_template, request, send_from_directory, url_for
 from flask_cors import CORS
 import fastText
@@ -50,7 +51,9 @@ def api():
     if model is None:      
         load_fasttext_model()
 
-    result = model.predict(query, k=5)
+    qclean = query.lower()
+    
+    result = model.predict(qclean, k=5)
     ret = []
     for i, pred in enumerate(result[0]):
         ret.append({'nace':pred.replace('__label__','').replace('"',''),'value':str(result[1][i])})
