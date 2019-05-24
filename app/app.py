@@ -1,5 +1,5 @@
 import flask
-#import werkzeug
+from werkzeug.utils import unescape
 from flask import Flask, Response, render_template, request, send_from_directory, url_for
 from flask_cors import CORS
 import fastText
@@ -51,7 +51,7 @@ def api():
     if model is None:      
         load_fasttext_model()
 
-    qclean = query.lower()
+    qclean = unescape(query).lower()
     
     result = model.predict(qclean, k=5)
     ret = []
