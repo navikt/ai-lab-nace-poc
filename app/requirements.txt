@@ -3,3 +3,4 @@ flask_cors
 wtforms
 awscli
 werkzeug
+pyyaml>=5.4 # not directly required, pinned by Snyk to avoid a vulnerability
